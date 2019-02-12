@@ -73,7 +73,6 @@ def activate_template():
     logging_level = os.environ.get('LOGGING_LEVEL', '').upper() or LOGGING_LEVEL
     if logging_level == 'DEBUG':
         print(f'Current executing python version is {sys.version_info}')
-
     # needed to support alternate .venv path if PIPENV_PIPFILE is set
     # Loading PIPENV related variables early, but not overriding if already loaded.
     for name, value in ENVIRONMENT_VARIABLES.items():
@@ -89,7 +88,6 @@ def activate_template():
     # After this everything is executed inside a virtual environment
     if not is_venv_active():
         activate_virtual_environment()
-
     try:
         import coloredlogs
         colored_logs = True
@@ -139,33 +137,24 @@ def activate_virtual_environment():
         elif sys.version_info[0] == 2:
             execfile(activation_file, dict(__file__=activation_file))
 
-def import_color_logs():
-    try:
-        import coloredlogs
-        colored_logs = True
-    except ImportError:
-        colored_logs = False
-    return colored_logs
-
 def setup_logging(level):
-    colored_logs = import_color_logs()
-    if colored_logs:
-        import coloredlogs
-        coloredlogs.install(level=level.upper())
-    else:
-        LOGGER = logging.getLogger()
-        handler = logging.StreamHandler()
-        handler.setLevel(level.upper())
-        formatter = logging.Formatter(('%(asctime)s - '
-                                       '%(name)s - '
-                                       '%(levelname)s - '
-                                       '%(message)s'))
-        handler.setFormatter(formatter)
-        LOGGER.addHandler(handler)
-        LOGGER.setLevel(level.upper())
+    LOGGER = logging.getLogger()
+    handler = logging.StreamHandler()
+    handler.setLevel(level.upper())
+    formatter = logging.Formatter(('%(asctime)s - '
+                                   '%(name)s - '
+                                   '%(levelname)s - '
+                                   '%(message)s'))
+    handler.setFormatter(formatter)
+    LOGGER.addHandler(handler)
+    LOGGER.setLevel(level.upper())
     for logger in LOGGERS_TO_DISABLE:
         logging.getLogger(logger).disabled = True
-
+    try:
+        import coloredlogs
+        coloredlogs.install(level=level.upper())
+    except ImportError:
+        pass
 
 # TODO extend debug logging in the following methods
 
@@ -186,7 +175,11 @@ def load_dot_env_file():
         for line in open('.env', 'r').read().splitlines():
             if line.strip().startswith('export '):
                 line = line.replace('export ', '')
-            key, value = line.strip().split('=', 1)
+            try:
+                key, value = line.strip().split('=', 1)
+            except ValueError:
+                LOGGER.error('Invalid .env file entry, please check line %s', line)
+                raise SystemExit(1)
             variables[key.strip()] = value.strip()
         load_environment_variables(variables)
 
@@ -261,12 +254,13 @@ def execute_command(command, filter_method=None):
             if sys.platform != 'win32':
                 command = shlex.split(command)
             LOGGER.debug('running command %s', command)
-            command_output = check_output(command)
-            filter_method(command_output.decode('utf-8'))
-            success = True
-        except CalledProcessError as command_output_error:
+            command_output = Popen(command,stdout=PIPE)
+            while command_output.poll() is None:
+                filter_method(command_output.stdout.readline().rstrip().decode('utf-8'))
+            success = True if command_output.returncode == 0 else False
+        except CalledProcessError as command_output:
             LOGGER.error('Error running command %s', command)
-            print(command_output_error.returncode, filter_method(command_output_error.stderr.decode('utf-8')))
+            filter_method(command_output.stderr.decode('utf-8'))
             success = False
         return success
     else:
@@ -279,6 +273,37 @@ def execute_command(command, filter_method=None):
             process = Popen(command, bufsize=1)
         process.communicate()
         return True if not process.returncode else False
+
+
+def execute_command_with_returned_output(command, filter_method=None):
+    LOGGER.debug('Executing command "%s"', command)
+    command = interpolate_executable(command)
+    stdout = ''
+    stderr = ''
+    if filter_method:
+        if not callable(filter_method):
+            raise ValueError('Argument is not a valid callable method')
+        try:
+            if sys.platform != 'win32':
+                command = shlex.split(command)
+            LOGGER.debug('running command %s', command)
+            command_execution = check_output(command)
+            stdout = filter_method(command_execution.decode('utf-8'))
+        except CalledProcessError as command_execution:
+            LOGGER.error('Error running command %s', command)
+            stderr = filter_method(command_execution.stderr.decode('utf-8'))
+        success = True if not command_execution.returncode else False
+    else:
+        if sys.platform == 'win32':
+            process = Popen(command, stdout=PIPE, stderr=PIPE, shell=True, bufsize=1)
+        else:
+            command = shlex.split(command)
+            LOGGER.debug('Command split to %s for posix shell', command)
+            LOGGER.debug('Command Output is not being filtered')
+            process = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1)
+        stdout, stderr = process.communicate()
+        success = True if not process.returncode else False
+    return success, stdout.decode('utf-8'), stderr.decode('utf-8')
 
 
 def open_file(path):
