@@ -184,16 +184,7 @@ def setup_logging(level, config_file=None):
         # Configure the logger
         logging.config.dictConfig(configuration)
     else:
-        handler = logging.StreamHandler()
-        handler.setLevel(level.upper())
-        formatter = logging.Formatter(('%(asctime)s - '
-                                       '%(name)s - '
-                                       '%(levelname)s - '
-                                       '%(message)s'))
-        handler.setFormatter(formatter)
-        LOGGER.addHandler(handler)
-        LOGGER.setLevel(level.upper())
-    coloredlogs.install(level=level.upper())
+        coloredlogs.install(level=level.upper())
 
 
 def main():
