@@ -1,0 +1,33 @@
+stages:
+  - lint
+  - test
+  - build
+  - upload
+
+lint:
+  tags: {{cookiecutter.gitlab_runner_tags}}
+  stage: lint
+  image: {{cookiecutter.gitlab_runner_image}}
+  script: _CI/scripts/lint.py
+
+test:
+  tags: {{cookiecutter.gitlab_runner_tags}}
+  stage: test
+  image: {{cookiecutter.gitlab_runner_image}}
+  script: _CI/scripts/test.py
+
+build:
+  tags: {{cookiecutter.gitlab_runner_tags}}
+  stage: build
+  image: {{cookiecutter.gitlab_runner_image}}
+  script: _CI/scripts/build.py
+
+upload:
+  tags: {{cookiecutter.gitlab_runner_tags}}
+  stage: upload
+  image: {{cookiecutter.gitlab_runner_image}}
+  only:
+    - tags
+  except:
+    - branches
+  script: _CI/scripts/upload.py

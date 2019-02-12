@@ -1,0 +1,10 @@
+{
+    "executables": [
+        "pipenv",
+        "make"
+    ],
+    "environment_variables": [
+    ],
+    "upload_environment_variables": [
+    ]
+}

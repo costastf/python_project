@@ -1,0 +1,38 @@
+{
+  "project_type": [
+    "lib",
+    "cli"
+  ],
+  "full_name": "Costas Tyfoxylos",
+  "email": "costas.tyf@gmail.com",
+  "repo_name": "Python Project",
+  "project_slug": "{{ cookiecutter.repo_name|lower|replace(' ', '') }}{{ cookiecutter.project_type }}",
+  "project_short_description": "A template to create python libraries",
+  "git_url": "https://github.com/costastf/{{ cookiecutter.project_slug }}",
+  "pypi_repository": "https://upload.pypi.org/legacy/",
+  "gitlab_runner_image": "IMAGE_WITH_PYTHON37_AND_PIPENV",
+  "gitlab_runner_tags": "[docker]",
+  "tags": "",
+  "development_status": [
+    "Planning",
+    "Pre-Alpha",
+    "Alpha",
+    "Beta",
+    "Production/Stable",
+    "Mature",
+    "Inactive"
+  ],
+  "compatible_versions": "3.7",
+  "documentation_url": "https://{{ cookiecutter.project_slug }}.readthedocs.org/en/latest",
+  "release_date": "{% now 'local', '%d-%m-%Y' %}",
+  "year": "{% now 'utc', '%Y' %}",
+  "license": [
+    "MIT",
+    "BSD-3",
+    "GNU GPL v3.0",
+    "Apache Software License 2.0"
+  ],
+  "_extensions": [
+    "jinja2_time.TimeExtension"
+  ]
+}

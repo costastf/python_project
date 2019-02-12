@@ -1,0 +1,8 @@
+_CI/**/* -diff
+.gitattributes -diff
+.gitignore -diff
+.gitlab-ci.yml -diff
+.python-version -diff
+cookiecutter.json -diff
+LICENSE -diff
+README.md -diff

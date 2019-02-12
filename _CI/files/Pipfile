@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+
+# Releasing
+semver = "~=2.8.1"
+gitwrapperlib = "~=0.9.1"
+
+# Logging
+coloredlogs = "~=10.0"
+emoji = "~=0.5.1"
+cookiecutter = "~=1.6.0"
+pipenv = "~=2018.11.26"
+
+[packages]
+
