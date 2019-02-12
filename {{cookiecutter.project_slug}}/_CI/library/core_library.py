@@ -138,23 +138,22 @@ def activate_virtual_environment():
             execfile(activation_file, dict(__file__=activation_file))
 
 def setup_logging(level):
-    LOGGER = logging.getLogger()
-    handler = logging.StreamHandler()
-    handler.setLevel(level.upper())
-    formatter = logging.Formatter(('%(asctime)s - '
-                                   '%(name)s - '
-                                   '%(levelname)s - '
-                                   '%(message)s'))
-    handler.setFormatter(formatter)
-    LOGGER.addHandler(handler)
-    LOGGER.setLevel(level.upper())
-    for logger in LOGGERS_TO_DISABLE:
-        logging.getLogger(logger).disabled = True
     try:
         import coloredlogs
         coloredlogs.install(level=level.upper())
     except ImportError:
-        pass
+        LOGGER = logging.getLogger()
+        handler = logging.StreamHandler()
+        handler.setLevel(level.upper())
+        formatter = logging.Formatter(('%(asctime)s - '
+                                       '%(name)s - '
+                                       '%(levelname)s - '
+                                       '%(message)s'))
+        handler.setFormatter(formatter)
+        LOGGER.addHandler(handler)
+        LOGGER.setLevel(level.upper())
+    for logger in LOGGERS_TO_DISABLE:
+        logging.getLogger(logger).disabled = True
 
 # TODO extend debug logging in the following methods
 
