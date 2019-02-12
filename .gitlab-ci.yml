@@ -2,6 +2,6 @@
 
 
 test_all_types_all_stages:
-  tags: [elastic]
-  image: enexis-docker-local.jfrog.io/python3_template_ci:0.1.0
+  tags: [docker]
+  image: DOCKER_WITH_PYTHON37_AND_PIPENV
   script: _CI/scripts/test.py --type=all --all
