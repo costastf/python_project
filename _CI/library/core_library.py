@@ -88,14 +88,6 @@ def activate_template():
     # After this everything is executed inside a virtual environment
     if not is_venv_active():
         activate_virtual_environment()
-    try:
-        import coloredlogs
-        colored_logs = True
-    except ImportError:
-        colored_logs = False
-
-
-
 
 
 # The sequence here is important because it makes sure
