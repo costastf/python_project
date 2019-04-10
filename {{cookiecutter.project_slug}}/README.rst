@@ -38,6 +38,7 @@ which would bump the version of the project to 0.1.0 tag it in git and do a push
 So the full workflow after git is initialized is:
 
  * repeat as necessary (of course it could be test - code - lint :) )
+
    * code
    * lint
    * test
