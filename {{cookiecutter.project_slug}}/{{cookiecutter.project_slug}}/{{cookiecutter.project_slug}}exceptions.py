@@ -87,7 +87,7 @@
 #
 {% endif %}
 """
-Custom exception code for {{cookiecutter.project_slug}}
+Custom exception code for {{cookiecutter.project_slug}}.
 
 .. _Google Python Style Guide:
    http://google.github.io/styleguide/pyguide.html

@@ -15,5 +15,7 @@ emoji = "~=0.5.1"
 cookiecutter = "~=1.6.0"
 pipenv = "~=2018.11.26"
 
+toml = "~=0.10.0"
+
 [packages]
 

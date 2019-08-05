@@ -87,7 +87,7 @@
 #
 {% endif %}
 """
-{{cookiecutter.project_slug}} package
+{{cookiecutter.project_slug}} package.
 
 Import all parts from {{cookiecutter.project_slug}} here
 

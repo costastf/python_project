@@ -14,3 +14,7 @@ Or, if you have virtualenvwrapper installed::
 Or, if you are using pipenv::
 
     $ pipenv install {{ cookiecutter.project_slug }}
+
+Or, if you are using pipx::
+
+    $ pipx install {{ cookiecutter.project_slug }}

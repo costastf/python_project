@@ -87,7 +87,7 @@
 #
 {% endif %}
 """
-Main code for {{cookiecutter.project_slug}}
+Main code for {{cookiecutter.project_slug}}.
 
 .. _Google Python Style Guide:
    http://google.github.io/styleguide/pyguide.html
@@ -172,7 +172,9 @@ def setup_logging(level, config_file=None):
     Needs the args to get the log level supplied
 
     Args:
-        args: The arguments returned gathered from argparse
+        level: At which level do we log
+        config_file: Configuration to use
+
     """
     # This will configure the logging, if the user has set a config file.
     # If there's no config file, logging will default to stdout.
