@@ -74,6 +74,8 @@ class Package:
         # So we can know where the pin starts and where it ends,
         # iteration should start from 2 character then backwards
         operators = ['<=', '>=', '~=', '==', '<', '>']
+        if isinstance(full_version, dict):
+            full_version = full_version.get('version')
         for operator in operators:
             if full_version.startswith(operator):
                 break
