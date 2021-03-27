@@ -62,4 +62,4 @@ LOGGERS_TO_DISABLE = ['sh.command',
                       'binaryornot.check',
                       'chardet.charsetprober']
 
-BRANCHES_SUPPORTED_FOR_TAG = ['master']
+BRANCHES_SUPPORTED_FOR_TAG = ['{{ cookiecutter.main_branch_name }}']

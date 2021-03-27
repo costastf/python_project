@@ -6,6 +6,7 @@
   "full_name": "Costas Tyfoxylos",
   "email": "costas.tyf@gmail.com",
   "repo_name": "Python Project",
+  "main_branch_name": "main",
   "project_slug": "{{ cookiecutter.repo_name|lower|replace(' ', '') }}{{ cookiecutter.project_type }}",
   "project_short_description": "A template to create python libraries",
   "git_url": "https://github.com/costastf/{{ cookiecutter.project_slug }}",
