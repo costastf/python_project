@@ -13,7 +13,7 @@ gitwrapperlib = "~=0.9.1"
 coloredlogs = "~=10.0"
 emoji = "~=0.5.1"
 cookiecutter = "~=1.6.0"
-pipenv = "~=2018.11.26"
+pipenv = "~=2022.1.8"
 
 toml = "~=0.10.0"
 
