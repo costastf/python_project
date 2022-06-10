@@ -12,7 +12,7 @@ gitwrapperlib = "~=0.9.1"
 # Logging
 coloredlogs = "~=10.0"
 emoji = "~=0.5.1"
-cookiecutter = "~=1.6.0"
+cookiecutter = "~=2.1.1"
 pipenv = "~=2022.1.8"
 
 toml = "~=0.10.0"
