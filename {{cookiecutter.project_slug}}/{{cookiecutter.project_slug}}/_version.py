@@ -90,7 +90,7 @@
 Manages the version of the package.
 
 .. _Google Python Style Guide:
-   http://google.github.io/styleguide/pyguide.html
+   https://google.github.io/styleguide/pyguide.html
 
 """
 
@@ -121,8 +121,11 @@ LOCAL_VERSION_FILE_PATH = os.path.abspath(
 )
 
 try:
-    with open(VERSION_FILE_PATH) as f:
+    with open(VERSION_FILE_PATH, encoding='utf8') as f:
         __version__ = f.read()
 except IOError:
-    with open(LOCAL_VERSION_FILE_PATH) as f:
-        __version__ = f.read()
+    try:
+        with open(LOCAL_VERSION_FILE_PATH, encoding='utf8') as f:
+            __version__ = f.read()
+    except IOError:
+        __version__ = 'unknown'
