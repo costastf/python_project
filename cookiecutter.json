@@ -23,7 +23,7 @@
     "Mature",
     "Inactive"
   ],
-  "compatible_versions": "3.7",
+  "compatible_versions": "3.9",
   "documentation_url": "https://{{ cookiecutter.project_slug }}.readthedocs.org/en/latest",
   "release_date": "{% now 'local', '%d-%m-%Y' %}",
   "year": "{% now 'utc', '%Y' %}",
