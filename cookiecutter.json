@@ -11,7 +11,7 @@
   "project_short_description": "A template to create python libraries",
   "git_url": "https://github.com/costastf/{{ cookiecutter.project_slug }}",
   "pypi_repository": "https://upload.pypi.org/legacy/",
-  "gitlab_runner_image": "IMAGE_WITH_PYTHON37_AND_PIPENV",
+  "gitlab_runner_image": "IMAGE_WITH_PYTHON39_AND_PIPENV",
   "gitlab_runner_tags": "[docker]",
   "tags": "",
   "development_status": [
