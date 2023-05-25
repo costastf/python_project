@@ -183,13 +183,13 @@ def setup_logging(level, config_file=None):
         # catching in case the file is not there and everything. Proper IO
         # handling is not shown here.
         try:
-            with open(config_file) as conf_file:
+            with open(config_file, encoding='utf-8') as conf_file:
                 configuration = json.loads(conf_file.read())
                 # Configure the logger
                 logging.config.dictConfig(configuration)
         except ValueError:
             print(f'File "{config_file}" is not valid json, cannot continue.')
-            raise SystemExit(1)
+            raise SystemExit(1) from None
     else:
         coloredlogs.install(level=level.upper())
 
